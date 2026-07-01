@@ -22,7 +22,6 @@ Desktop.ini
 *.log
 error.txt
 temp/
-uploads/
 
 # Maven wrapper folder/files (if generated, though recommended to keep .mvn/wrapper/maven-wrapper.properties if using wrapper)
 # But we can let them keep standard maven wrapper.
