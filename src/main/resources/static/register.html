@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - StellarStore</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-meteor"></i> Stellar<span>Store</span>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+            <a href="cart.html" class="nav-item"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="login.html" class="nav-item"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html" class="nav-item active"><i class="fas fa-user-plus"></i> Register</a>
+        </div>
+    </nav>
+
+    <!-- Register Container -->
+    <main class="main-container">
+        <div class="form-card glass-panel">
+            <h2 class="form-title">Join StellarStore</h2>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label class="form-label" for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="John Doe" required minlength="3">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg-password">Password</label>
+                    <div class="password-wrapper" style="position: relative;">
+                        <input type="password" id="reg-password" class="form-control"
+                            placeholder="at least 6 characters" style="padding-right: 2.5rem;" required minlength="6">
+                        <i class="far fa-eye toggle-password-btn"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg-confirm-password">Confirm Password</label>
+                    <div class="password-wrapper" style="position: relative;">
+                        <input type="password" id="reg-confirm-password" class="form-control"
+                            placeholder="re-enter password" style="padding-right: 2.5rem;" required>
+                        <i class="far fa-eye toggle-password-btn"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reg-role">Register As</label>
+                    <select id="reg-role" class="form-control" style="background: var(--bg-dark); color: white;"
+                        required>
+                        <option value="ROLE_USER">Customer</option>
+                        <option value="ROLE_ADMIN">Administrator</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.8rem;">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <div class="form-footer">
+                Already have an account? <a href="login.html">Sign In Here</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 StellarStore.</p>
+    </footer>
+
+    <!-- Form Handler Script -->
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            const role = document.getElementById('reg-role').value;
+
+            // Simple validations
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match!', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password, role })
+                });
+
+                if (res.ok) {
+                    showToast('Registration successful! Redirecting to login...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    const data = await res.json();
+                    showToast(data.message || 'Registration failed!', 'error');
+                }
+            } catch (err) {
+                showToast('Server connection failed. Try again later.', 'error');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Books & Stationery - Premium E-Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-meteor"></i> Stellar<span>Store</span>
+        </div>
+
+        <div class="nav-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="nav-search-input" placeholder="Search books, notebooks, pens...">
+            <i class="fas fa-times" id="search-clear-btn" style="display: none;"></i>
+        </div>
+
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-item active"><i class="fas fa-home"></i> Home</a>
+            <a href="cart.html" class="nav-item cart-badge-container">
+                <i class="fas fa-shopping-cart"></i> Cart
+                <span id="cart-badge" class="cart-badge" style="display: none;"></span>
+            </a>
+            <a href="admin.html" id="nav-admin-link" class="nav-item" style="display: none;"><i
+                    class="fas fa-user-shield"></i> Admin Panel</a>
+            <a href="login.html" id="nav-login-link" class="nav-item"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html" id="nav-register-link" class="nav-item"><i class="fas fa-user-plus"></i>
+                Register</a>
+
+            <div id="nav-user-display" class="user-pill" style="display: none;">
+                <!-- Dynamically loaded avatar and name -->
+            </div>
+
+            <a href="#" id="nav-logout-btn" class="nav-item" onclick="logout()" style="display: none;"><i
+                    class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <!--<header class="hero-section">
+        <div class="hero-content">
+            <span class="hero-badge"><i class="fas fa-gift"></i> Back to School Season Sale</span>
+            <h1 class="hero-title">Elevate Your Coding & Writing Experience</h1>
+            <p class="hero-subtitle">Discover our hand-picked collection of programming books and premium stationery
+                items crafted for modern engineers, developers, and students.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#shop-section" class="btn-primary"><i class="fas fa-compass"></i> Explore Catalog</a>
+                <a href="register.html" class="btn-secondary">Join Member Club</a>
+            </div>
+        </div>
+    </header>-->
+
+    <!-- Main Container -->
+    <main class="main-container" id="shop-section">
+
+        <!-- Category Selection -->
+        <div class="section-header">
+            <h2 class="section-title">Shop By Category</h2>
+        </div>
+
+        <div class="category-grid">
+            <div class="category-card glass-panel"
+                onclick="document.querySelector('[data-category=Books]').click(); document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})">
+                <i class="fas fa-book category-icon"></i>
+                <h3 class="category-name">Academic Books</h3>
+                <p class="category-desc">Computer Science, Python, Java, Algorithms & Web Development books.</p>
+            </div>
+            <div class="category-card glass-panel"
+                onclick="document.querySelector('[data-category=Stationery]').click(); document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})">
+                <i class="fas fa-pencil-ruler category-icon"></i>
+                <h3 class="category-name">Premium Stationery</h3>
+                <p class="category-desc">Notebooks, geometry boxes, pen sets, and high-quality planners.</p>
+            </div>
+        </div>
+
+        <!-- Catalog Filter and Header -->
+        <div class="section-header" id="products-section">
+            <h2 class="section-title">Our Featured Products</h2>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-category="all">All Products</button>
+            <button class="filter-btn" data-category="Books">Books</button>
+            <button class="filter-btn" data-category="Stationery">Stationery</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="product-grid" class="product-grid">
+            <!-- Dynamic product cards loaded by JS -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 StellarStore.</p>
+        <p>Spring Boot &bull; MySQL &bull; Vanilla JS &bull; Glassmorphic UI</p>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

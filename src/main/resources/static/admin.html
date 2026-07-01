@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - StellarStore</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-meteor"></i> Stellar<span>Store</span>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+            <a href="cart.html" class="nav-item"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="admin.html" id="nav-admin-link" class="nav-item active"><i class="fas fa-user-shield"></i> Admin
+                Panel</a>
+            <div id="nav-user-display" class="user-pill">
+                <!-- User Initials Avatar & Name -->
+            </div>
+            <a href="#" id="nav-logout-btn" class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                Logout</a>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard Container -->
+    <main class="main-container">
+
+        <div class="admin-layout">
+
+            <!-- Sidebar Navigation -->
+            <aside class="admin-sidebar glass-panel">
+                <h3 style="margin-bottom: 1.5rem; text-align: center; color: var(--primary-color);">Dashboard</h3>
+                <ul class="admin-sidebar-menu">
+                    <li id="tab-products" class="admin-menu-item active"><i class="fas fa-box"></i> Manage Products</li>
+                    <li id="tab-users" class="admin-menu-item"><i class="fas fa-users"></i> Registered Users</li>
+                </ul>
+            </aside>
+
+            <!-- Main Panel -->
+            <section class="admin-main glass-panel">
+
+                <!-- Tab View: Manage Products -->
+                <div id="products-view">
+                    <div class="admin-header">
+                        <h2>Product Inventory</h2>
+                        <button id="open-add-modal-btn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab View: Registered Users -->
+                <div id="users-view" style="display: none;">
+                    <div class="admin-header">
+                        <h2>Registered Members</h2>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Full Name</th>
+                                    <th>Email Address</th>
+                                    <th>Access Level</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container glass-panel">
+            <div class="modal-header">
+                <h2 id="modal-title" style="font-family: 'Outfit';">Add New Product</h2>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form id="product-form">
+                <div class="form-group">
+                    <label class="form-label" for="prod-name">Product Name</label>
+                    <input type="text" id="prod-name" class="form-control" placeholder="e.g. Advanced Java Guide"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="prod-category">Category</label>
+                    <select id="prod-category" class="form-control" style="background: var(--bg-dark); color: white;"
+                        required>
+                        <option value="Books">Books</option>
+                        <option value="Stationery">Stationery</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="prod-price">Price (INR ₹)</label>
+                    <input type="number" id="prod-price" class="form-control" placeholder="e.g. 450" required min="1"
+                        step="0.01">
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="form-label" for="prod-image">Product Image File</label>
+                    <input type="file" id="prod-image" class="form-control" accept="image/*"
+                        style="padding: 0.5rem 1rem;">
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                    <button type="button" class="btn-secondary modal-close" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 StellarStore.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

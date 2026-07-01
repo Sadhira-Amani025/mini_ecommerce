@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - StellarStore</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location.href='index.html'">
+            <i class="fas fa-meteor"></i> Stellar<span>Store</span>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+            <a href="cart.html" class="nav-item"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="login.html" class="nav-item active"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html" class="nav-item"><i class="fas fa-user-plus"></i> Register</a>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <main class="main-container">
+        <div class="form-card glass-panel">
+            <h2 class="form-title">Member Login</h2>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Email Address</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Password</label>
+                    <div class="password-wrapper" style="position: relative;">
+                        <input type="password" id="login-password" class="form-control"
+                            placeholder="enter your password" style="padding-right: 2.5rem;" required>
+                        <i class="far fa-eye toggle-password-btn"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+
+
+            <div class="form-footer">
+                Don't have an account? <a href="register.html">Sign Up Here</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 StellarStore.</p>
+    </footer>
+
+    <!-- Form Handler Script -->
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    saveSession(data.token, {
+                        id: data.id,
+                        name: data.name,
+                        email: data.email,
+                        role: data.role
+                    });
+
+                    showToast('Welcome back, ' + data.name + '!', 'success');
+
+                    setTimeout(() => {
+                        if (data.role === 'ROLE_ADMIN') {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 1000);
+                } else {
+                    const errorData = await res.json();
+                    showToast(errorData.message || 'Invalid email or password!', 'error');
+                }
+            } catch (err) {
+                showToast('Database connection failed. Please ensure the backend is running.', 'error');
+            }
+        });
+    </script>
+</body>
+
+</html>
